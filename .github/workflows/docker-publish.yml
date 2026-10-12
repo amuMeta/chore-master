@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: mellowfox/tidyquest
+  IMAGE_NAME: mellowfox/jiawu
 
 jobs:
   build-and-push:
@@ -59,6 +59,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: ${{ secrets.DOCKERHUB_USERNAME }}/tidyquest
+          repository: ${{ secrets.DOCKERHUB_USERNAME }}/jiawu
           short-description: "Transform household chores into an epic family adventure - Self-hosted gamification app"
           readme-filepath: ./README.md

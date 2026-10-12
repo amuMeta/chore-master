@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { api } from './useApi';
+import { readLS, writeLS, removeLS } from '../constants/storageKeys';
 
 export interface User {
   id: number;
@@ -22,7 +23,7 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   const checkAuth = useCallback(async () => {
-    const token = localStorage.getItem('tidyquest_token');
+    const token = readLS('token');
     if (!token) {
       setLoading(false);
       return;
@@ -31,7 +32,7 @@ export function useAuth() {
       const userData = await api.me();
       setUser(userData);
     } catch {
-      localStorage.removeItem('tidyquest_token');
+      removeLS('token');
     } finally {
       setLoading(false);
     }
@@ -41,18 +42,18 @@ export function useAuth() {
 
   const login = async (username: string, password: string) => {
     const { token, user: userData } = await api.login({ username, password });
-    localStorage.setItem('tidyquest_token', token);
+    writeLS('token', token);
     setUser(userData);
   };
 
   const register = async (data: { username: string; password: string; displayName: string; avatarColor?: string; language?: string }) => {
     const { token, user: userData } = await api.register(data);
-    localStorage.setItem('tidyquest_token', token);
+    writeLS('token', token);
     setUser(userData);
   };
 
   const logout = () => {
-    localStorage.removeItem('tidyquest_token');
+    removeLS('token');
     setUser(null);
   };
 
@@ -60,7 +61,7 @@ export function useAuth() {
     try {
       const userData = await api.me();
       // Guard: don't restore session if user logged out during the in-flight request
-      if (localStorage.getItem('tidyquest_token')) {
+      if (readLS('token')) {
         setUser(userData);
       }
     } catch { /* ignore */ }

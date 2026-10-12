@@ -35,7 +35,7 @@ environment:
 
 #### 2. **Set Your Timezone**
 
-TidyQuest uses the `TZ` environment variable for day/week boundaries and notification scheduling. Without it, everything defaults to UTC.
+家务小当家 uses the `TZ` environment variable for day/week boundaries and notification scheduling. Without it, everything defaults to UTC.
 
 ```yaml
 environment:
@@ -46,16 +46,16 @@ environment:
 
 #### 3. **Use HTTPS with a Reverse Proxy**
 
-TidyQuest should **never** be exposed directly to the internet over HTTP.
+家务小当家 should **never** be exposed directly to the internet over HTTP.
 
 **Recommended setup:**
 - Use Caddy, Nginx, or Traefik as a reverse proxy
 - Obtain a valid TLS certificate (Let's Encrypt)
-- Forward port 443 → TidyQuest container port 3000
+- Forward port 443 → 家务小当家 container port 3000
 
 **Example with Caddy:**
 ```
-tidyquest.yourdomain.com {
+jiawu.yourdomain.com {
     reverse_proxy localhost:3020
 }
 ```
@@ -68,7 +68,7 @@ Telegram bot tokens and ntfy access tokens are stored **unencrypted** in the SQL
 
 **Mitigation:**
 - Restrict file system access to the `./data/` directory
-- Use proper file permissions: `chmod 600 data/tidyquest.db`
+- Use proper file permissions: `chmod 600 data/jiawu.db`
 - Never expose the database file publicly
 - Regularly back up and encrypt database backups
 
@@ -76,14 +76,14 @@ Telegram bot tokens and ntfy access tokens are stored **unencrypted** in the SQL
 
 #### 5. **Database Backups**
 
-**Location**: `./data/tidyquest.db`
+**Location**: `./data/jiawu.db`
 
 ```bash
 # Manual backup
-cp data/tidyquest.db backups/tidyquest-$(date +%Y%m%d).db
+cp data/jiawu.db backups/jiawu-$(date +%Y%m%d).db
 
 # Automated daily backup (crontab)
-0 3 * * * cd /path/to/tidyquest && cp data/tidyquest.db backups/tidyquest-$(date +\%Y\%m\%d).db
+0 3 * * * cd /path/to/jiawu && cp data/jiawu.db backups/jiawu-$(date +\%Y\%m\%d).db
 ```
 
 **Note**: Data export (Settings → Export) never includes password hashes.
@@ -134,7 +134,7 @@ environment:
 
 ## 🚨 Reporting a Vulnerability
 
-If you discover a security vulnerability in TidyQuest, please:
+If you discover a security vulnerability in 家务小当家, please:
 
 1. **Do NOT open a public GitHub issue**
 2. Email the maintainer directly (see GitHub profile)

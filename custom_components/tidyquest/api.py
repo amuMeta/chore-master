@@ -1,4 +1,4 @@
-"""Async client for the TidyQuest REST API."""
+"""Async client for the 家务小当家 REST API."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ import aiohttp
 
 
 class TidyQuestApiError(Exception):
-    """Raised when the TidyQuest API returns an error."""
+    """Raised when the 家务小当家 API returns an error."""
 
     def __init__(self, message: str, status: int | None = None) -> None:
         super().__init__(message)
@@ -16,7 +16,7 @@ class TidyQuestApiError(Exception):
 
 
 class TidyQuestApiClient:
-    """Minimal API client for TidyQuest."""
+    """Minimal API client for 家务小当家."""
 
     def __init__(
         self,
@@ -43,7 +43,7 @@ class TidyQuestApiClient:
         return data["user"]
 
     async def async_get_current_user(self) -> dict[str, Any]:
-        """Return the authenticated TidyQuest user."""
+        """Return the authenticated 家务小当家 user."""
         return await self._request("get", "/auth/me")
 
     async def async_get_rooms(self) -> list[dict[str, Any]]:
@@ -51,13 +51,13 @@ class TidyQuestApiClient:
         return await self._request("get", "/rooms")
 
     async def async_get_users(self) -> list[dict[str, Any]]:
-        """Return TidyQuest users."""
+        """Return 家务小当家 users."""
         return await self._request("get", "/users")
 
     async def async_complete_task(
         self, task_id: int, on_behalf_of_user_id: int | None = None
     ) -> dict[str, Any]:
-        """Complete a task, optionally on behalf of another TidyQuest user."""
+        """Complete a task, optionally on behalf of another 家务小当家 user."""
         payload: dict[str, Any] = {}
         if on_behalf_of_user_id is not None:
             payload["onBehalfOfUserId"] = on_behalf_of_user_id

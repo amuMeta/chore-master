@@ -1,11 +1,11 @@
-"""Constants for the TidyQuest integration."""
+"""Constants for the 家务小当家 integration."""
 
 from __future__ import annotations
 
 from datetime import timedelta
 
 DOMAIN = "tidyquest"
-DEFAULT_NAME = "TidyQuest"
+DEFAULT_NAME = "家务小当家"
 DEFAULT_SCAN_INTERVAL = timedelta(minutes=5)
 
 CONF_BASE_URL = "base_url"

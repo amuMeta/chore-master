@@ -1,0 +1,23 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "连接家务小当家",
+        "description": "使用家务小当家的管理员或普通成员账号，让 Home Assistant 可以代家庭成员完成任务。",
+        "data": {
+          "base_url": "家务小当家 地址",
+          "username": "用户名",
+          "password": "密码"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "无法连接到家务小当家",
+      "invalid_auth": "家务小当家用户名或密码错误",
+      "unknown": "未知错误"
+    },
+    "abort": {
+      "already_configured": "该家务小当家服务与用户已配置过"
+    }
+  }
+}

@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import db from '../database';
 import { AuthRequest, authMiddleware } from '../middleware/auth';
 import { ensureAdmin } from '../utils/adminHelpers';
+import { BACKUP_FILENAME } from '../brand';
 
 const router = Router();
 router.use(authMiddleware);
@@ -23,7 +24,7 @@ router.get('/export', (req: AuthRequest, res: Response) => {
   const rewards = db.prepare('SELECT * FROM rewards').all();
   const rewardRedemptions = db.prepare('SELECT * FROM reward_redemptions').all();
 
-  res.setHeader('Content-Disposition', 'attachment; filename=tidyquest-backup.json');
+  res.setHeader('Content-Disposition', `attachment; filename=${BACKUP_FILENAME}`);
   res.json({ version: 6, exportedAt: new Date().toISOString(), users, rooms, tasks, taskAssignees, completions, settings, goals, rewards, rewardRedemptions });
 });
 

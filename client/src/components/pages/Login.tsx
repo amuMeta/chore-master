@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { SparkleIcon } from '../icons/UIIcons';
 import { useTranslation } from '../../hooks/useTranslation';
 import { LANGUAGES, resolveLanguage } from '../../i18n/languages';
+import { BRAND } from '../../brand';
+import { readLS, writeLS } from '../../constants/storageKeys';
 import { api } from '../../hooks/useApi';
 import UserAvatar from '../shared/UserAvatar';
 
@@ -21,7 +23,7 @@ interface LoginProps {
 
 export function Login({ onLogin, onSwitchToRegister }: LoginProps) {
   const initialLang = (() => {
-    const saved = typeof localStorage !== 'undefined' ? localStorage.getItem('tidyquest_auth_lang') : null;
+    const saved = typeof localStorage !== 'undefined' ? readLS('authLang') : null;
     const browser = typeof navigator !== 'undefined' ? navigator.language : null;
     return resolveLanguage(saved, browser);
   })();
@@ -82,14 +84,14 @@ export function Login({ onLogin, onSwitchToRegister }: LoginProps) {
           }}>
             <SparkleIcon />
           </div>
-          <h1 style={{ fontSize: 24, fontWeight: 900, color: 'var(--warm-text)', margin: 0 }}>TidyQuest</h1>
+          <h1 style={{ fontSize: 24, fontWeight: 900, color: 'var(--warm-text)', margin: 0 }}>{BRAND.name}</h1>
           <p style={{ fontSize: 12, color: 'var(--warm-text-light)', fontWeight: 600, marginTop: 4 }}>{t('auth.welcomeBack')}</p>
           <select
             value={authLanguage}
             onChange={(e) => {
               const v = e.target.value;
               setAuthLanguage(v);
-              localStorage.setItem('tidyquest_auth_lang', v);
+              writeLS('authLang', v);
             }}
             style={{
               marginTop: 10, padding: '6px 10px', borderRadius: 10, border: '1.5px solid var(--warm-border)',

@@ -20,6 +20,8 @@ import { Achievements } from './components/pages/Achievements';
 import { Rewards } from './components/pages/Rewards';
 import { useTranslation } from './hooks/useTranslation';
 import { resolveLanguage, getLocale } from './i18n/languages';
+import { BRAND, BACKUP_FILENAME } from './brand';
+import { readLS, writeLS } from './constants/storageKeys';
 
 function AppContent() {
   const { user, loading, login, register, logout, refreshUser } = useAuth();
@@ -41,7 +43,7 @@ function AppContent() {
   const [achievementsData, setAchievementsData] = useState<any>(null);
   const [rewardsData, setRewardsData] = useState<{ rewards: any[]; mine: any[] }>({ rewards: [], mine: [] });
   const [theme, setTheme] = useState<'orange' | 'blue' | 'rose' | 'night'>(() => {
-    const saved = typeof localStorage !== 'undefined' ? localStorage.getItem('tidyquest_theme') : null;
+    const saved = typeof localStorage !== 'undefined' ? readLS('theme') : null;
     return (saved === 'blue' || saved === 'rose' || saved === 'night') ? saved : 'orange';
   });
   const [vacationConfig, setVacationConfig] = useState<{ vacationMode: boolean; vacationStartDate: string | null; vacationEndDate: string | null } | null>(null);
@@ -55,7 +57,7 @@ function AppContent() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
     if (typeof window === 'undefined') return false;
-    const saved = localStorage.getItem('tidyquest-sidebar-collapsed');
+    const saved = readLS('sidebarCollapsed');
     return saved === 'true';
   });
   const navigate = useNavigate();
@@ -164,11 +166,11 @@ function AppContent() {
     } else {
       html.setAttribute('data-theme', theme);
     }
-    localStorage.setItem('tidyquest_theme', theme);
+    writeLS('theme', theme);
   }, [theme]);
 
   useEffect(() => {
-    document.title = 'TidyQuest';
+    document.title = BRAND.name;
   }, []);
 
   useEffect(() => {
@@ -179,7 +181,7 @@ function AppContent() {
 
   // Persist sidebar collapsed state
   useEffect(() => {
-    localStorage.setItem('tidyquest-sidebar-collapsed', String(sidebarCollapsed));
+    writeLS('sidebarCollapsed', String(sidebarCollapsed));
   }, [sidebarCollapsed]);
 
   const handleCompleteTask = async (taskId: number) => {
@@ -227,7 +229,7 @@ function AppContent() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'tidyquest-backup.json';
+    a.download = BACKUP_FILENAME;
     a.click();
     URL.revokeObjectURL(url);
   };

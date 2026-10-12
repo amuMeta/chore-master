@@ -3,8 +3,9 @@ import path from 'path';
 import fs from 'fs';
 import bcrypt from 'bcryptjs';
 import { suggestTaskIcon } from './utils/taskIcons';
+import { DB_FILENAME, ACHIEVEMENT_LEGEND_ID } from './brand';
 
-const DB_PATH = path.join(__dirname, '..', '..', 'data', 'tidyquest.db');
+const DB_PATH = path.join(__dirname, '..', '..', 'data', DB_FILENAME);
 
 export function createDatabase(dbPath: string = DB_PATH): InstanceType<typeof Database> {
   const dir = path.dirname(dbPath);
@@ -401,6 +402,19 @@ export function initDatabase() {
   db.prepare("INSERT OR IGNORE INTO app_settings (key, value) VALUES ('ntfyServerUrl', 'https://ntfy.sh')").run();
   db.prepare("INSERT OR IGNORE INTO app_settings (key, value) VALUES ('ntfyTopic', '')").run();
   db.prepare("INSERT OR IGNORE INTO app_settings (key, value) VALUES ('ntfyToken', '')").run();
+
+  // One-shot brand migration: carry "already notified" records over to the new
+  // achievement id so users who already earned it don't get a duplicate push.
+  // Idempotent — guarded by an app_settings flag.
+  const achIdMigrated = (db.prepare("SELECT value FROM app_settings WHERE key = 'achievementIdBrandMigrated_jiawu_v1'").get() as any)?.value;
+  if (!achIdMigrated) {
+    db.prepare(`
+      INSERT OR IGNORE INTO user_achievement_notifications (userId, achievementId, sentAt)
+      SELECT userId, ?, sentAt FROM user_achievement_notifications WHERE achievementId = 'tidyquest_legend_250'
+    `).run(ACHIEVEMENT_LEGEND_ID);
+    db.prepare("DELETE FROM user_achievement_notifications WHERE achievementId = 'tidyquest_legend_250'").run();
+    db.prepare("INSERT OR REPLACE INTO app_settings (key, value) VALUES ('achievementIdBrandMigrated_jiawu_v1', '1')").run();
+  }
 
   // One-shot migration: promote old telegram/ntfy settings to new master toggle
   const notifMigrated = (db.prepare("SELECT value FROM app_settings WHERE key = 'notifMasterMigrated_v1'").get() as any)?.value;

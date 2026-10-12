@@ -22,7 +22,7 @@ body:
     attributes:
       label: Proposed Solution
       description: Describe the solution you'd like
-      placeholder: I would like TidyQuest to...
+      placeholder: I would like 家务小当家 to...
     validations:
       required: true
 
@@ -78,7 +78,7 @@ body:
       options:
         - label: I have searched existing issues to avoid duplicates
           required: true
-        - label: This feature aligns with TidyQuest's goal of gamifying household chores
+        - label: This feature aligns with 家务小当家's goal of gamifying household chores
           required: true
         - label: I am willing to contribute to the implementation (optional)
           required: false

@@ -1,8 +1,8 @@
-# 🏠 TidyQuest
+# 🏠 家务小当家
 
 > Transform household chores into an epic family adventure
 
-**TidyQuest** is a self-hosted web application that gamifies housework using RPG mechanics. Complete tasks, earn coins, unlock achievements, and compete with your family on the leaderboard.
+**家务小当家** is a self-hosted web application that gamifies housework using RPG mechanics. Complete tasks, earn coins, unlock achievements, and compete with your family on the leaderboard.
 
 ![Version](https://img.shields.io/badge/version-0.6.0-blue.svg)
 ![Docker](https://img.shields.io/badge/docker-ready-brightgreen.svg)
@@ -12,13 +12,13 @@
 ---
 
 > [!WARNING]
-> **Early-stage project** — TidyQuest is under active development. You may encounter bugs, incomplete features, or breaking changes between versions. Back up your data regularly and feel free to [open an issue](https://github.com/mellow-fox/TidyQuest/issues) if something breaks.
+> **Early-stage project** — 家务小当家 is under active development. You may encounter bugs, incomplete features, or breaking changes between versions. Back up your data regularly and feel free to [open an issue](https://github.com/mellow-fox/TidyQuest/issues) if something breaks.
 
 ---
 
-## ✨ What is TidyQuest?
+## ✨ What is 家务小当家?
 
-TidyQuest turns boring chores into quests:
+家务小当家 turns boring chores into quests:
 - **🎯 Health Bars**: Each task has a visual health indicator that decays over time
 - **💰 Coins & Rewards**: Earn coins by completing tasks, redeem for family rewards
 - **🔥 Streaks**: Build daily/weekly streaks to stay motivated
@@ -78,10 +78,10 @@ Perfect for families who want to:
 
 #### Option A: Unraid Community Applications (Easiest)
 
-If you're running Unraid, TidyQuest is available directly from the **Community Applications** catalog:
+If you're running Unraid, 家务小当家 is available directly from the **Community Applications** catalog:
 
 1. Open Community Applications in your Unraid dashboard
-2. Search for **TidyQuest**
+2. Search for **家务小当家**
 3. Click **Install** and fill in your `JWT_SECRET`
 4. Done!
 
@@ -91,15 +91,15 @@ Fastest way to get started on any Linux server using the pre-built multi-platfor
 
 1. **Create project directory**
    ```bash
-   mkdir tidyquest && cd tidyquest
+   mkdir jiawu && cd jiawu
    ```
 
 2. **Create docker-compose.yml**
    ```yaml
    services:
-     tidyquest:
-       image: mellowfox/tidyquest:latest
-       container_name: tidyquest
+     jiawu:
+       image: mellowfox/jiawu:latest
+       container_name: jiawu
        ports:
          - "3020:3000"
        environment:
@@ -204,7 +204,7 @@ On first launch, the database is empty. Create an admin account via the **Regist
 ## 📂 Project Structure
 
 ```
-TidyQuest/
+家务小当家/
 ├── client/           # React frontend
 │   ├── src/
 │   │   ├── components/  # UI components
@@ -220,7 +220,7 @@ TidyQuest/
 │   │   └── database.ts  # SQLite setup
 │   └── package.json
 ├── data/             # Persistent storage (Docker volume)
-│   ├── tidyquest.db     # SQLite database
+│   ├── jiawu.db     # SQLite database
 │   └── avatars/         # User-uploaded photos
 ├── Dockerfile        # Multi-stage build
 ├── docker-compose.yml
@@ -247,7 +247,7 @@ See `.env.example` for all options. Key variables:
 
 ### Notifications (Optional)
 
-TidyQuest supports two notification providers (configure in Settings, admin only):
+家务小当家 supports two notification providers (configure in Settings, admin only):
 
 **Telegram**
 1. Create a Telegram bot via [@BotFather](https://t.me/botfather)
@@ -315,7 +315,7 @@ If an admin forgets their password:
 - Database backup strategy
 - Telegram token protection
 
-⚠️ **Never expose TidyQuest directly to the internet over HTTP**.
+⚠️ **Never expose 家务小当家 directly to the internet over HTTP**.
 
 ---
 
@@ -346,7 +346,7 @@ Admin → Settings → Export Data → Download JSON
 
 ### File System Backup
 ```bash
-cp data/tidyquest.db backups/tidyquest-$(date +%Y%m%d).db
+cp data/jiawu.db backups/jiawu-$(date +%Y%m%d).db
 ```
 
 ### Restore
@@ -373,14 +373,14 @@ All endpoints require `Authorization: Bearer <token>` (except auth routes).
 
 ## 🏠 Home Assistant Integration
 
-TidyQuest includes a custom Home Assistant integration that exposes tasks as sensors and allows you to complete or manage them from dashboards and automations.
+家务小当家 includes a custom Home Assistant integration that exposes tasks as sensors and allows you to complete or manage them from dashboards and automations.
 
 ### Install
 
-1. Copy `custom_components/tidyquest/` into your Home Assistant `config/custom_components/` directory
+1. Copy `custom_components/jiawu/` into your Home Assistant `config/custom_components/` directory
 2. Restart Home Assistant
-3. Go to **Settings → Devices & Services → Add Integration** and search for **TidyQuest**
-4. Enter your TidyQuest URL and credentials (admin or member account)
+3. Go to **Settings → Devices & Services → Add Integration** and search for **家务小当家**
+4. Enter your 家务小当家 URL and credentials (admin or member account)
 
 ### Entities
 
@@ -390,17 +390,17 @@ Each task becomes a `sensor` whose state is the task's current health (0–100).
 
 | Service | Description |
 |---------|-------------|
-| `tidyquest.complete_task` | Mark a task as done. HA user is automatically matched to a TidyQuest user by display name |
-| `tidyquest.reset_task` | Reset a task to due/dirty (removes today's completion) |
-| `tidyquest.create_task` | Create a new task in a room |
-| `tidyquest.update_task` | Update task properties (frequency, effort, etc.) |
-| `tidyquest.delete_task` | Delete a task |
-| `tidyquest.refresh` | Force immediate sensor refresh |
+| `jiawu.complete_task` | Mark a task as done. HA user is automatically matched to a 家务小当家 user by display name |
+| `jiawu.reset_task` | Reset a task to due/dirty (removes today's completion) |
+| `jiawu.create_task` | Create a new task in a room |
+| `jiawu.update_task` | Update task properties (frequency, effort, etc.) |
+| `jiawu.delete_task` | Delete a task |
+| `jiawu.refresh` | Force immediate sensor refresh |
 
 ### Example — Complete a task from a dashboard button
 
 ```yaml
-service: tidyquest.complete_task
+service: jiawu.complete_task
 target:
   entity_id: sensor.kitchen_wash_dishes_health
 ```
@@ -419,9 +419,9 @@ automation:
       message: "The dishes need doing!"
 ```
 
-> **User matching**: HA user names are automatically matched to TidyQuest `displayName` (case-insensitive). Override with `user_name` or `tidyquest_user_id` in service data.
+> **User matching**: HA user names are automatically matched to 家务小当家 `displayName` (case-insensitive). Override with `user_name` or `jiawu_user_id` in service data.
 
-See `custom_components/tidyquest/README.md` for full documentation.
+See `custom_components/jiawu/README.md` for full documentation.
 
 ---
 
@@ -441,12 +441,12 @@ Contributions are welcome! Please:
 This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
 
 **What this means:**
-- ✅ You can use, modify, and distribute TidyQuest freely
+- ✅ You can use, modify, and distribute 家务小当家 freely
 - ✅ You can run it commercially (for your business/family)
-- ⚠️ If you modify and **host** TidyQuest as a service (even privately), you **must** share your source code
+- ⚠️ If you modify and **host** 家务小当家 as a service (even privately), you **must** share your source code
 - ⚠️ Any derivative work must also be licensed under AGPL-3.0
 
-**Why AGPL?** To ensure TidyQuest remains free and open-source forever, preventing proprietary SaaS forks.
+**Why AGPL?** To ensure 家务小当家 remains free and open-source forever, preventing proprietary SaaS forks.
 
 See the `LICENSE` file for full details.
 

@@ -1,7 +1,9 @@
 const API_BASE = '/api';
 
+import { readLS, removeLS } from '../constants/storageKeys';
+
 function getToken(): string | null {
-  return localStorage.getItem('tidyquest_token');
+  return readLS('token');
 }
 
 async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
@@ -20,7 +22,7 @@ async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> 
   });
 
   if (res.status === 401) {
-    localStorage.removeItem('tidyquest_token');
+    removeLS('token');
     window.location.href = '/login';
     throw new Error('Unauthorized');
   }

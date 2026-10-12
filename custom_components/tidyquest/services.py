@@ -1,4 +1,4 @@
-"""Services for the TidyQuest integration."""
+"""Services for the 家务小当家 integration."""
 
 from __future__ import annotations
 
@@ -99,7 +99,7 @@ RESET_SCHEMA = vol.Schema(
 
 
 def async_setup_services(hass: HomeAssistant) -> None:
-    """Register TidyQuest services."""
+    """Register 家务小当家 services."""
     if hass.services.has_service(DOMAIN, SERVICE_COMPLETE_TASK):
         return
 
@@ -113,7 +113,7 @@ def async_setup_services(hass: HomeAssistant) -> None:
             try:
                 await task_coordinator.client.async_complete_task(task_id, user_id)
             except TidyQuestApiError as err:
-                raise HomeAssistantError(f"Could not complete TidyQuest task: {err}") from err
+                raise HomeAssistantError(f"Could not complete 家务小当家 task: {err}") from err
             await task_coordinator.async_request_refresh()
 
     async def create_task(call: ServiceCall) -> None:
@@ -123,7 +123,7 @@ def async_setup_services(hass: HomeAssistant) -> None:
         try:
             await coordinator.client.async_create_task(room_id, payload)
         except TidyQuestApiError as err:
-            raise HomeAssistantError(f"Could not create TidyQuest task: {err}") from err
+            raise HomeAssistantError(f"Could not create 家务小当家 task: {err}") from err
         await coordinator.async_request_refresh()
 
     async def update_task(call: ServiceCall) -> None:
@@ -134,7 +134,7 @@ def async_setup_services(hass: HomeAssistant) -> None:
             try:
                 await coordinator.client.async_update_task(task_id, payload)
             except TidyQuestApiError as err:
-                raise HomeAssistantError(f"Could not update TidyQuest task: {err}") from err
+                raise HomeAssistantError(f"Could not update 家务小当家 task: {err}") from err
             await coordinator.async_request_refresh()
 
     async def delete_task(call: ServiceCall) -> None:
@@ -144,7 +144,7 @@ def async_setup_services(hass: HomeAssistant) -> None:
             try:
                 await coordinator.client.async_delete_task(task_id)
             except TidyQuestApiError as err:
-                raise HomeAssistantError(f"Could not delete TidyQuest task: {err}") from err
+                raise HomeAssistantError(f"Could not delete 家务小当家 task: {err}") from err
             await coordinator.async_request_refresh()
 
     async def reset_task(call: ServiceCall) -> None:
@@ -154,7 +154,7 @@ def async_setup_services(hass: HomeAssistant) -> None:
             try:
                 await coordinator.client.async_reset_task(task_id)
             except TidyQuestApiError as err:
-                raise HomeAssistantError(f"Could not reset TidyQuest task: {err}") from err
+                raise HomeAssistantError(f"Could not reset 家务小当家 task: {err}") from err
             await coordinator.async_request_refresh()
 
     async def refresh(call: ServiceCall) -> None:
@@ -180,7 +180,7 @@ def async_setup_services(hass: HomeAssistant) -> None:
 
 
 def async_unload_services(hass: HomeAssistant) -> None:
-    """Unregister TidyQuest services."""
+    """Unregister 家务小当家 services."""
     for service in (
         SERVICE_COMPLETE_TASK,
         SERVICE_CREATE_TASK,
@@ -203,7 +203,7 @@ def _first_coordinator(hass: HomeAssistant) -> TidyQuestCoordinator:
     """Return the first loaded coordinator."""
     coordinators = _coordinators(hass)
     if not coordinators:
-        raise HomeAssistantError("TidyQuest is not loaded")
+        raise HomeAssistantError("家务小当家 is not loaded")
     return coordinators[0]
 
 
@@ -212,7 +212,7 @@ def _coordinator_for_task(hass: HomeAssistant, task_id: int) -> TidyQuestCoordin
     for coordinator in _coordinators(hass):
         if task_id in coordinator.data.tasks:
             return coordinator
-    raise HomeAssistantError(f"TidyQuest task id {task_id} was not found")
+    raise HomeAssistantError(f"家务小当家 task id {task_id} was not found")
 
 
 def _task_ids_from_call(hass: HomeAssistant, call: ServiceCall) -> list[int]:
@@ -231,7 +231,7 @@ def _task_ids_from_call(hass: HomeAssistant, call: ServiceCall) -> list[int]:
             raise HomeAssistantError(f"Entity {entity_id} was not found")
         task_id = state.attributes.get("task_id")
         if task_id is None:
-            raise HomeAssistantError(f"Entity {entity_id} is not a TidyQuest task sensor")
+            raise HomeAssistantError(f"Entity {entity_id} is not a 家务小当家 task sensor")
         task_ids.append(int(task_id))
     return task_ids
 
@@ -239,7 +239,7 @@ def _task_ids_from_call(hass: HomeAssistant, call: ServiceCall) -> list[int]:
 async def _resolve_tidyquest_user_id(
     hass: HomeAssistant, coordinator: TidyQuestCoordinator, call: ServiceCall
 ) -> int | None:
-    """Resolve the TidyQuest user represented by a Home Assistant service call."""
+    """Resolve the 家务小当家 user represented by a Home Assistant service call."""
     if CONF_TIDYQUEST_USER_ID in call.data:
         return int(call.data[CONF_TIDYQUEST_USER_ID])
 
@@ -254,9 +254,9 @@ async def _resolve_tidyquest_user_id(
     user = _find_user_by_name(coordinator, str(name))
     if user is None:
         raise HomeAssistantError(
-            f"No TidyQuest user matches Home Assistant user name '{name}'. "
+            f"No 家务小当家 user matches Home Assistant user name '{name}'. "
             "Set user_name or tidyquest_user_id on the service call, or rename the "
-            "Home Assistant user to match a TidyQuest display name or username."
+            "Home Assistant user to match a 家务小当家 display name or username."
         )
     return int(user["id"])
 
@@ -264,7 +264,7 @@ async def _resolve_tidyquest_user_id(
 def _find_user_by_name(
     coordinator: TidyQuestCoordinator, name: str
 ) -> dict[str, Any] | None:
-    """Find a TidyQuest user by display name or username."""
+    """Find a 家务小当家 user by display name or username."""
     normalized = name.strip().casefold()
     for user in coordinator.data.users:
         candidates = (user.get("displayName"), user.get("username"))
@@ -282,7 +282,7 @@ def _resolve_room_id(coordinator: TidyQuestCoordinator, data: dict[str, Any]) ->
     for room in coordinator.data.rooms:
         if str(room.get("name", "")).strip().casefold() == room_name:
             return int(room["id"])
-    raise HomeAssistantError(f"No TidyQuest room matches '{data[CONF_ROOM_NAME]}'")
+    raise HomeAssistantError(f"No 家务小当家 room matches '{data[CONF_ROOM_NAME]}'")
 
 
 def _task_payload(
@@ -291,7 +291,7 @@ def _task_payload(
     *,
     include_name: bool,
 ) -> dict[str, Any]:
-    """Convert Home Assistant service data into a TidyQuest task payload."""
+    """Convert Home Assistant service data into a 家务小当家 task payload."""
     payload: dict[str, Any] = {}
     if include_name or CONF_NAME in data:
         payload["name"] = data[CONF_NAME]
@@ -322,8 +322,8 @@ def _copy_if_present(
 
 
 def _user_id_from_name(coordinator: TidyQuestCoordinator, name: str) -> int:
-    """Return a TidyQuest user id for a display name or username."""
+    """Return a 家务小当家 user id for a display name or username."""
     user = _find_user_by_name(coordinator, name)
     if user is None:
-        raise HomeAssistantError(f"No TidyQuest user matches '{name}'")
+        raise HomeAssistantError(f"No 家务小当家 user matches '{name}'")
     return int(user["id"])

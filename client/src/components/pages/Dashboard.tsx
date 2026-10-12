@@ -8,6 +8,7 @@ import { TaskIcon } from '../icons/TaskIcons';
 import { getHealthColor } from '../../utils/health';
 import { useTranslation } from '../../hooks/useTranslation';
 import { AdminCompleteModal } from '../shared/AdminCompleteModal';
+import { readLS, writeLS, LS_KEYS } from '../../constants/storageKeys';
 import { api } from '../../hooks/useApi';
 
 /* ── Types ── */
@@ -164,10 +165,10 @@ const Dashboard: React.FC<DashboardProps> = ({
   const allOnDemandTasks = onDemandQuests ?? todaysQuests.filter(q => q.onDemand);
   const [adminModalQuest, setAdminModalQuest] = useState<Quest | null>(null);
   const [taskFilter, setTaskFilter] = useState<'all' | 'mine'>(() => {
-    try { return (localStorage.getItem('tq-task-filter') as 'all' | 'mine') || 'all'; }
+    try { return (readLS('taskFilter') as 'all' | 'mine') || 'all'; }
     catch { return 'all'; }
   });
-  useEffect(() => { localStorage.setItem('tq-task-filter', taskFilter); }, [taskFilter]);
+  useEffect(() => { writeLS('taskFilter', taskFilter); }, [taskFilter]);
   const filterQuests = (quests: Quest[]) => {
     if (taskFilter === 'all') return quests;
     return quests.filter(q =>
@@ -193,7 +194,7 @@ const Dashboard: React.FC<DashboardProps> = ({
     { id: 'leaderboard', label: t('app.leaderboardTitle') },
     { id: 'recentActivity', label: t('dashboard.recentActivity') },
   ];
-  const LS_KEY = 'tq-dashboard-cards';
+  const LS_KEY = LS_KEYS.dashboardCards;
   const [hiddenCards, setHiddenCards] = useState<Set<string>>(() => {
     try { return new Set(JSON.parse(localStorage.getItem(LS_KEY) || '[]')); }
     catch { return new Set(); }

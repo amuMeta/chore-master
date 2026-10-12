@@ -1,6 +1,6 @@
-# 🌐 TidyQuest API Documentation
+# 🌐 家务小当家 API Documentation
 
-Complete reference for all TidyQuest REST API endpoints.
+Complete reference for all 家务小当家 REST API endpoints.
 
 **Base URL**: `http://localhost:3020/api`
 

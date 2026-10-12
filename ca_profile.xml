@@ -2,17 +2,17 @@
 <Maintainer>
   <WebPage>https://github.com/mellow-fox/TidyQuest</WebPage>
   <Profile>
-## TidyQuest
+## 家务小当家
 
 Self-hosted web app that gamifies household chores for the whole family.
 
 Assign tasks to rooms, earn coins, unlock achievements, track goals, and compete on the leaderboard. Designed to make chores fun for kids and adults alike.
 
 **Apps maintained:**
-- **TidyQuest** — Household chore gamification (tasks, coins, achievements, leaderboard, goals)
+- **家务小当家** — Household chore gamification (tasks, coins, achievements, leaderboard, goals)
 
 **Support:** https://github.com/mellow-fox/TidyQuest/issues
   </Profile>
-  <Photo>https://raw.githubusercontent.com/mellow-fox/TidyQuest/main/screenshots/dashboard.jpg</Photo>
-  <Photo>https://raw.githubusercontent.com/mellow-fox/TidyQuest/main/screenshots/rooms.jpg</Photo>
+  <Photo>https://raw.githubusercontent.com/mellow-fox/家务小当家/main/screenshots/dashboard.jpg</Photo>
+  <Photo>https://raw.githubusercontent.com/mellow-fox/家务小当家/main/screenshots/rooms.jpg</Photo>
 </Maintainer>

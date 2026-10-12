@@ -1,4 +1,4 @@
-"""Config flow for TidyQuest."""
+"""Config flow for 家务小当家."""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ from .const import CONF_BASE_URL, DEFAULT_NAME, DOMAIN
 
 
 class TidyQuestConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Handle a TidyQuest config flow."""
+    """Handle a 家务小当家 config flow."""
 
     VERSION = 1
 

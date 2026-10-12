@@ -4,6 +4,7 @@ import { FireIcon, CoinIcon, SparkleIcon } from '../icons/UIIcons';
 import { UserAvatar } from '../shared/UserAvatar';
 import { useTranslation } from '../../hooks/useTranslation';
 import type { User } from '../../hooks/useAuth';
+import { BRAND } from '../../brand';
 
 interface SidebarProps {
   user: User;
@@ -107,7 +108,7 @@ export function Sidebar({ user, isMobileOpen = false, onClose, gamificationEnabl
                 <SparkleIcon />
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 19, fontWeight: 900, color: 'var(--warm-text)', letterSpacing: -0.5 }}>TidyQuest</div>
+                <div style={{ fontSize: 19, fontWeight: 900, color: 'var(--warm-text)', letterSpacing: -0.5 }}>{BRAND.name}</div>
                 <div style={{ fontSize: 10, color: 'var(--warm-text-light)', fontWeight: 700, letterSpacing: 1.2, textTransform: 'uppercase' }}>
                   {t('nav.tagline')}
                 </div>

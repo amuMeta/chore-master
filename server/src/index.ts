@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { initDatabase } from './database';
+import { BRAND_NAME } from './brand';
 import authRoutes from './routes/auth';
 import roomsRoutes from './routes/rooms';
 import zonesRoutes from './routes/zones';
@@ -69,7 +70,7 @@ if (require.main === module || !process.env.VITEST) {
   });
 
   app.listen(PORT, () => {
-    console.log(`TidyQuest server running on http://localhost:${PORT}`);
+    console.log(`${BRAND_NAME} server running on http://localhost:${PORT}`);
     void sendDueTaskNotificationsIfNeeded();
     setInterval(() => {
       void sendDueTaskNotificationsIfNeeded();

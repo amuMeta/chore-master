@@ -1,4 +1,5 @@
 import db from '../database';
+import { BRAND_NAME } from '../brand';
 
 interface TelegramSettings {
   enabled: boolean;
@@ -172,7 +173,7 @@ export async function sendNtfyMessageDetailed(message: string, options: SendNtfy
   }
 
   try {
-    const headers: Record<string, string> = { Title: 'TidyQuest' };
+    const headers: Record<string, string> = { Title: BRAND_NAME };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
     const response = await fetch(`${serverUrl}/${topic}`, {

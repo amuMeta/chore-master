@@ -1,10 +1,10 @@
 complete_task:
   name: Complete task
-  description: Complete one or more TidyQuest tasks. The Home Assistant user name is matched to a TidyQuest display name or username unless a user is supplied.
+  description: Complete one or more 家务小当家 tasks. The Home Assistant user name is matched to a 家务小当家 display name or username unless a user is supplied.
   fields:
     entity_id:
       name: Task sensor
-      description: TidyQuest task sensor entity to complete.
+      description: 家务小当家 task sensor entity to complete.
       selector:
         entity:
           integration: tidyquest
@@ -12,19 +12,19 @@ complete_task:
           multiple: true
     task_id:
       name: Task ID
-      description: TidyQuest task id to complete when not using an entity.
+      description: 家务小当家 task id to complete when not using an entity.
       selector:
         number:
           min: 1
           mode: box
     user_name:
       name: User name
-      description: TidyQuest display name or username to complete the task for.
+      description: 家务小当家 display name or username to complete the task for.
       selector:
         text:
     tidyquest_user_id:
-      name: TidyQuest user ID
-      description: Explicit TidyQuest user id to complete the task for.
+      name: 家务小当家 user ID
+      description: Explicit 家务小当家 user id to complete the task for.
       selector:
         number:
           min: 1
@@ -32,18 +32,18 @@ complete_task:
 
 create_task:
   name: Create task
-  description: Create a TidyQuest task in a room.
+  description: Create a 家务小当家 task in a room.
   fields:
     room_id:
       name: Room ID
-      description: TidyQuest room id.
+      description: 家务小当家 room id.
       selector:
         number:
           min: 1
           mode: box
     room_name:
       name: Room name
-      description: TidyQuest room name.
+      description: 家务小当家 room name.
       selector:
         text:
     name:
@@ -79,7 +79,7 @@ create_task:
           mode: slider
     assigned_users:
       name: Assigned users
-      description: TidyQuest display names or usernames.
+      description: 家务小当家 display names or usernames.
       selector:
         text:
           multiple: true
@@ -110,7 +110,7 @@ create_task:
 
 update_task:
   name: Update task
-  description: Update one or more TidyQuest tasks.
+  description: Update one or more 家务小当家 tasks.
   fields:
     entity_id:
       name: Task sensor
@@ -157,7 +157,7 @@ update_task:
           mode: slider
     assigned_users:
       name: Assigned users
-      description: Replaces assigned TidyQuest users.
+      description: Replaces assigned 家务小当家 users.
       selector:
         text:
           multiple: true
@@ -188,7 +188,7 @@ update_task:
 
 delete_task:
   name: Delete task
-  description: Delete one or more TidyQuest tasks.
+  description: Delete one or more 家务小当家 tasks.
   fields:
     entity_id:
       name: Task sensor
@@ -206,11 +206,11 @@ delete_task:
 
 reset_task:
   name: Reset task
-  description: Reset one or more TidyQuest tasks to dirty/due, removing today's completion records.
+  description: Reset one or more 家务小当家 tasks to dirty/due, removing today's completion records.
   fields:
     entity_id:
       name: Task sensor
-      description: TidyQuest task sensor entity to reset.
+      description: 家务小当家 task sensor entity to reset.
       selector:
         entity:
           integration: tidyquest
@@ -218,7 +218,7 @@ reset_task:
           multiple: true
     task_id:
       name: Task ID
-      description: TidyQuest task id to reset when not using an entity.
+      description: 家务小当家 task id to reset when not using an entity.
       selector:
         number:
           min: 1
@@ -226,4 +226,4 @@ reset_task:
 
 refresh:
   name: Refresh
-  description: Refresh TidyQuest rooms, users, and task sensors now.
+  description: Refresh 家务小当家 rooms, users, and task sensors now.

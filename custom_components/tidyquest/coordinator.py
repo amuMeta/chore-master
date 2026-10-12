@@ -1,4 +1,4 @@
-"""Data coordinator for the TidyQuest integration."""
+"""Data coordinator for the 家务小当家 integration."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ _LOGGER = logging.getLogger(__name__)
 
 @dataclass(slots=True)
 class TidyQuestData:
-    """Latest TidyQuest data used by entities and services."""
+    """Latest 家务小当家 data used by entities and services."""
 
     rooms: list[dict[str, Any]]
     users: list[dict[str, Any]]
@@ -25,7 +25,7 @@ class TidyQuestData:
 
 
 class TidyQuestCoordinator(DataUpdateCoordinator[TidyQuestData]):
-    """Coordinate TidyQuest API updates."""
+    """Coordinate 家务小当家 API updates."""
 
     def __init__(self, hass: HomeAssistant, client: TidyQuestApiClient) -> None:
         super().__init__(
@@ -37,7 +37,7 @@ class TidyQuestCoordinator(DataUpdateCoordinator[TidyQuestData]):
         self.client = client
 
     async def _async_update_data(self) -> TidyQuestData:
-        """Fetch all data from TidyQuest."""
+        """Fetch all data from 家务小当家."""
         try:
             rooms = await self.client.async_get_rooms()
             users = await self.client.async_get_users()

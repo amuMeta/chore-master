@@ -1,3 +1,5 @@
+import { ACHIEVEMENT_LEGEND_ID } from '../brand';
+
 export interface AchievementDef {
   id: string;
   titleKey: string;
@@ -14,7 +16,7 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   { id: 'busy_bee_25', titleKey: 'achievements.busyBee', descKey: 'achievements.busyBeeDesc', icon: 'broom', threshold: 25, metric: 'completions' },
   { id: 'cleaning_hero_50', titleKey: 'achievements.cleaningHero', descKey: 'achievements.cleaningHeroDesc', icon: 'shield', threshold: 50, metric: 'completions' },
   { id: 'chore_champion_100', titleKey: 'achievements.choreChampion', descKey: 'achievements.choreChampionDesc', icon: 'crown', threshold: 100, metric: 'completions' },
-  { id: 'tidyquest_legend_250', titleKey: 'achievements.legend', descKey: 'achievements.legendDesc', icon: 'diamond', threshold: 250, metric: 'completions' },
+  { id: ACHIEVEMENT_LEGEND_ID, titleKey: 'achievements.legend', descKey: 'achievements.legendDesc', icon: 'diamond', threshold: 250, metric: 'completions' },
   { id: 'unstoppable_500', titleKey: 'achievements.unstoppable', descKey: 'achievements.unstoppableDesc', icon: 'rocket', threshold: 500, metric: 'completions' },
 
   // Streaks

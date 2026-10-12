@@ -18,7 +18,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    console.error('TidyQuest uncaught error:', error, info.componentStack);
+    console.error('家务小当家 uncaught error:', error, info.componentStack);
   }
 
   render() {

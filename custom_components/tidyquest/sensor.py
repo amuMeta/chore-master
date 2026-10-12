@@ -1,4 +1,4 @@
-"""TidyQuest task sensors."""
+"""家务小当家 task sensors."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN
+from .const import DOMAIN, DEFAULT_NAME
 from .coordinator import TidyQuestCoordinator
 
 
@@ -20,7 +20,7 @@ async def async_setup_entry(
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up TidyQuest sensors."""
+    """Set up 家务小当家 sensors."""
     coordinator: TidyQuestCoordinator = hass.data[DOMAIN][entry.entry_id]["coordinator"]
     known_task_ids: set[int] = set()
 
@@ -38,7 +38,7 @@ async def async_setup_entry(
 
 
 class TidyQuestTaskSensor(CoordinatorEntity[TidyQuestCoordinator], SensorEntity):
-    """Sensor representing a TidyQuest task health value."""
+    """Sensor representing a 家务小当家 task health value."""
 
     _attr_has_entity_name = True
     _attr_native_unit_of_measurement = PERCENTAGE
@@ -111,14 +111,14 @@ class TidyQuestTaskSensor(CoordinatorEntity[TidyQuestCoordinator], SensorEntity)
 
     @property
     def device_info(self) -> dict[str, Any]:
-        """Group task sensors by TidyQuest room."""
+        """Group task sensors by 家务小当家 room."""
         task = self._task
         room_id = task.get("roomId") if task else "unknown"
-        room_name = task.get("roomName") if task else "TidyQuest"
+        room_name = task.get("roomName") if task else DEFAULT_NAME
         return {
             "identifiers": {(DOMAIN, f"room_{room_id}")},
             "name": room_name,
-            "manufacturer": "TidyQuest",
+            "manufacturer": DEFAULT_NAME,
         }
 
     @property

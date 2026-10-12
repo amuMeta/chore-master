@@ -1,4 +1,4 @@
-"""Home Assistant integration for TidyQuest."""
+"""Home Assistant integration for 家务小当家."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ from .services import async_setup_services, async_unload_services
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry
 ) -> bool:
-    """Set up TidyQuest from a config entry."""
+    """Set up 家务小当家 from a config entry."""
     client = TidyQuestApiClient(
         async_get_clientsession(hass),
         entry.data[CONF_BASE_URL],
@@ -48,7 +48,7 @@ async def async_setup_entry(
 async def async_unload_entry(
     hass: HomeAssistant, entry: ConfigEntry
 ) -> bool:
-    """Unload a TidyQuest config entry."""
+    """Unload a 家务小当家 config entry."""
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         hass.data[DOMAIN].pop(entry.entry_id)

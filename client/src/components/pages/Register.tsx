@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { SparkleIcon } from '../icons/UIIcons';
 import { useTranslation } from '../../hooks/useTranslation';
 import { LANGUAGES, resolveLanguage } from '../../i18n/languages';
+import { readLS, writeLS } from '../../constants/storageKeys';
 
 interface RegisterProps {
   onRegister: (data: { username: string; password: string; displayName: string; language: string }) => Promise<void>;
@@ -10,7 +11,7 @@ interface RegisterProps {
 
 export function Register({ onRegister, onSwitchToLogin }: RegisterProps) {
   const initialLang = (() => {
-    const saved = typeof localStorage !== 'undefined' ? localStorage.getItem('tidyquest_auth_lang') : null;
+    const saved = typeof localStorage !== 'undefined' ? readLS('authLang') : null;
     const browser = typeof navigator !== 'undefined' ? navigator.language : null;
     return resolveLanguage(saved, browser);
   })();
@@ -62,7 +63,7 @@ export function Register({ onRegister, onSwitchToLogin }: RegisterProps) {
             onChange={(e) => {
               const v = e.target.value;
               setAuthLanguage(v);
-              localStorage.setItem('tidyquest_auth_lang', v);
+              writeLS('authLang', v);
             }}
             style={{
               marginTop: 10, padding: '6px 10px', borderRadius: 10, border: '1.5px solid var(--warm-border)',

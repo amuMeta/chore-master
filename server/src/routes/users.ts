@@ -4,6 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import bcrypt from 'bcryptjs';
 import db from '../database';
+import { BRAND_NAME } from '../brand';
 import { AuthRequest, authMiddleware } from '../middleware/auth';
 import { DEFAULT_COINS_BY_EFFORT, normalizeCoinsByEffortConfig } from '../utils/health';
 import { NotificationTypeSettings, sendTelegramMessageDetailed, sendNtfyMessageDetailed } from '../utils/notifications';
@@ -642,7 +643,7 @@ router.post('/notifications-test', async (req: AuthRequest, res: Response) => {
     botToken?: string; chatId?: string; provider?: 'telegram' | 'ntfy';
     ntfyServerUrl?: string; ntfyTopic?: string; ntfyToken?: string;
   };
-  const testMessage = `TidyQuest test notification from ${requester.displayName} (${new Date().toISOString()})`;
+  const testMessage = `${BRAND_NAME} test notification from ${requester.displayName} (${new Date().toISOString()})`;
 
   if (provider === 'ntfy') {
     const result = await sendNtfyMessageDetailed(testMessage, { ignoreEnabled: true, serverUrl: ntfyServerUrl, topic: ntfyTopic, token: ntfyToken });

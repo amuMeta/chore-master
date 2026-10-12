@@ -1,24 +1,24 @@
-# TidyQuest Home Assistant Integration
+# 家务小当家 Home Assistant Integration
 
-This custom integration exposes TidyQuest tasks in Home Assistant and lets household users complete or manage tasks through services.
+This custom integration exposes 家务小当家 tasks in Home Assistant and lets household users complete or manage tasks through services.
 
 ## Install
 
-Copy `custom_components/tidyquest` into your Home Assistant `custom_components` directory, restart Home Assistant, then add **TidyQuest** from **Settings > Devices & services**.
+Copy `custom_components/tidyquest` into your Home Assistant `custom_components` directory, restart Home Assistant, then add **家务小当家** from **Settings > Devices & services**.
 
-Use a TidyQuest admin or member account for the integration. TidyQuest only allows admin/member users to complete tasks on behalf of another user.
+Use a 家务小当家 admin or member account for the integration. 家务小当家 only allows admin/member users to complete tasks on behalf of another user.
 
 ## User Matching
 
-When `tidyquest.complete_task` is called from a dashboard, Home Assistant includes the user who pressed the control in the service context. The integration reads that Home Assistant user's name and matches it to a TidyQuest `displayName` or `username`, then sends the matching TidyQuest user id as `onBehalfOfUserId`.
+When `tidyquest.complete_task` is called from a dashboard, Home Assistant includes the user who pressed the control in the service context. The integration reads that Home Assistant user's name and matches it to a 家务小当家 `displayName` or `username`, then sends the matching 家务小当家 user id as `onBehalfOfUserId`.
 
-For this to work without extra service data, each Home Assistant user's name must exactly match a TidyQuest display name or username, ignoring case.
+For this to work without extra service data, each Home Assistant user's name must exactly match a 家务小当家 display name or username, ignoring case.
 
 You can override matching by passing `user_name` or `tidyquest_user_id` to the service.
 
 ## Entities
 
-Each TidyQuest task becomes a sensor with the task health as its state. Attributes include:
+Each 家务小当家 task becomes a sensor with the task health as its state. Attributes include:
 
 - `task_id`
 - `room_id`
