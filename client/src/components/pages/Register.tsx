@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { SparkleIcon } from '../icons/UIIcons';
 import { useTranslation } from '../../hooks/useTranslation';
 import { LANGUAGES, resolveLanguage } from '../../i18n/languages';
 import { readLS, writeLS } from '../../constants/storageKeys';
+import { BRAND_LOGO } from '../../brand';
 
 interface RegisterProps {
   onRegister: (data: { username: string; password: string; displayName: string; language: string }) => Promise<void>;
@@ -48,14 +48,12 @@ export function Register({ onRegister, onSwitchToLogin }: RegisterProps) {
     }}>
       <div className="tq-card auth-card" style={{ padding: 40, width: 400, maxWidth: 'calc(100vw - 24px)' }}>
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
-          <div style={{
-            width: 56, height: 56, borderRadius: 18, margin: '0 auto 14px',
-            background: 'var(--warm-streak-bg)',
-            border: '1.5px solid var(--warm-streak-border)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}>
-            <SparkleIcon />
-          </div>
+          <img
+            src={BRAND_LOGO}
+            alt=""
+            aria-hidden="true"
+            style={{ width: 72, height: 72, objectFit: 'contain', margin: '0 auto 6px', display: 'block' }}
+          />
           <h1 style={{ fontSize: 24, fontWeight: 900, color: 'var(--warm-text)', margin: 0 }}>{t('auth.welcome')}</h1>
           <p style={{ fontSize: 12, color: 'var(--warm-text-light)', fontWeight: 600, marginTop: 4 }}>{t('auth.createYourAccount')}</p>
           <select

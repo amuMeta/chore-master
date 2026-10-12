@@ -1,10 +1,10 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { HomeIcon, RoomsIcon, TrophyIcon, CalendarIcon, ActivityIcon, AchievementsIcon, SettingsIcon, RewardsIcon } from '../icons/NavIcons';
-import { FireIcon, CoinIcon, SparkleIcon } from '../icons/UIIcons';
+import { FireIcon, CoinIcon } from '../icons/UIIcons';
 import { UserAvatar } from '../shared/UserAvatar';
 import { useTranslation } from '../../hooks/useTranslation';
 import type { User } from '../../hooks/useAuth';
-import { BRAND } from '../../brand';
+import { BRAND, BRAND_LOGO } from '../../brand';
 
 interface SidebarProps {
   user: User;
@@ -98,15 +98,12 @@ export function Sidebar({ user, isMobileOpen = false, onClose, gamificationEnabl
             </button>
           ) : (
             <>
-              <div style={{
-                width: 42, height: 42, borderRadius: 14,
-                background: 'var(--warm-sidebar-active)',
-                border: '1.5px solid var(--warm-sidebar-user-border)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                flexShrink: 0,
-              }}>
-                <SparkleIcon />
-              </div>
+              <img
+                src={BRAND_LOGO}
+                alt=""
+                aria-hidden="true"
+                style={{ width: 42, height: 42, objectFit: 'contain', flexShrink: 0 }}
+              />
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 19, fontWeight: 900, color: 'var(--warm-text)', letterSpacing: -0.5 }}>{BRAND.name}</div>
                 <div style={{ fontSize: 10, color: 'var(--warm-text-light)', fontWeight: 700, letterSpacing: 1.2, textTransform: 'uppercase' }}>
