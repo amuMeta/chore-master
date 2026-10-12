@@ -1,5 +1,6 @@
 import { TaskIcon } from '../icons/TaskIcons';
 import { useTranslation } from '../../hooks/useTranslation';
+import { getLocale } from '../../i18n/languages';
 
 interface CalendarProps {
   completions: Array<{ completedAt: string; taskName: string; translationKey?: string; roomName: string }>;
@@ -9,8 +10,7 @@ interface CalendarProps {
 
 export function Calendar({ completions, tasks, language }: CalendarProps) {
   const { taskName, t, roomDisplayName } = useTranslation(language);
-  const localeMap: Record<string, string> = { en: 'en-US', fr: 'fr-FR', de: 'de-DE', es: 'es-ES', it: 'it-IT' };
-  const locale = localeMap[language || 'en'] || 'en-US';
+  const locale = getLocale(language);
   const today = new Date();
   const year = today.getFullYear();
   const month = today.getMonth();

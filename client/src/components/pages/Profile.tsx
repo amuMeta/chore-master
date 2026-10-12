@@ -4,6 +4,7 @@ import { AVATAR_PRESETS, AvatarPresetIcon } from '../icons/AvatarPresets';
 import { GlobeIcon } from '../icons/UIIcons';
 import { api } from '../../hooks/useApi';
 import { useTranslation } from '../../hooks/useTranslation';
+import { LANGUAGES } from '../../i18n/languages';
 import type { User } from '../../hooks/useAuth';
 
 const COLORS = [
@@ -242,12 +243,9 @@ export function Profile({ user, onSave, onLogout }: ProfileProps) {
               onChange={(e) => setLanguage(e.target.value)}
               className="tq-input" style={{ flex: 1, fontWeight: 700, cursor: 'pointer' }}
             >
-              <option value="en">English</option>
-              <option value="fr">Fran{'\u00E7'}ais</option>
-              <option value="de">Deutsch</option>
-              <option value="es">Espa{'\u00F1'}ol</option>
-              <option value="it">Italiano</option>
-              <option value="nl">Nederlands</option>
+              {LANGUAGES.map((l) => (
+                <option key={l.code} value={l.code}>{l.label}</option>
+              ))}
             </select>
           </div>
         </div>

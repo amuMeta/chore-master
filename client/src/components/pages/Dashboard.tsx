@@ -338,7 +338,7 @@ const Dashboard: React.FC<DashboardProps> = ({
               {(['all', 'mine'] as const).map((f) => (
                 <button key={f} onClick={() => setTaskFilter(f)}
                   style={{
-                    padding: '4px 12px', fontSize: 11, fontWeight: 700, fontFamily: 'Nunito', cursor: 'pointer',
+                    padding: '4px 12px', fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-sans)', cursor: 'pointer',
                     border: 'none', background: taskFilter === f ? 'var(--warm-accent)' : 'var(--warm-bg-subtle)',
                     color: taskFilter === f ? '#fff' : 'var(--warm-text-light)',
                     transition: 'all 0.15s ease',

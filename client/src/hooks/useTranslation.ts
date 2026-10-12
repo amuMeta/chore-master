@@ -4,14 +4,16 @@ import de from '../i18n/de.json';
 import es from '../i18n/es.json';
 import it from '../i18n/it.json';
 import nl from '../i18n/nl.json';
+import zh from '../i18n/zh.json';
+import { DEFAULT_LANGUAGE } from '../i18n/languages';
 
 type TranslationData = typeof en;
 
-const translations: Record<string, TranslationData> = { en, fr, de, es, it, nl };
+const translations: Record<string, TranslationData> = { en, fr, de, es, it, nl, zh };
 
-export function useTranslation(language: string = 'en') {
-  const lang = translations[language] || translations.en;
-  const fallback = translations.en;
+export function useTranslation(language: string = DEFAULT_LANGUAGE) {
+  const lang = translations[language] || translations[DEFAULT_LANGUAGE];
+  const fallback = translations[DEFAULT_LANGUAGE];
 
   function normalize(value: string): string {
     return value.trim().toLowerCase().replace(/\s+/g, ' ');

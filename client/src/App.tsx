@@ -19,12 +19,14 @@ import { Register } from './components/pages/Register';
 import { Achievements } from './components/pages/Achievements';
 import { Rewards } from './components/pages/Rewards';
 import { useTranslation } from './hooks/useTranslation';
+import { resolveLanguage, getLocale } from './i18n/languages';
 
 function AppContent() {
   const { user, loading, login, register, logout, refreshUser } = useAuth();
-  const browserLang = typeof navigator !== 'undefined' ? navigator.language.slice(0, 2) : 'en';
   // Always call useTranslation unconditionally (React hooks rule) — use user's language if known, else browser lang
-  const { t } = useTranslation(user?.language ?? browserLang);
+  const { t } = useTranslation(
+    resolveLanguage(user?.language, typeof navigator !== 'undefined' ? navigator.language : null)
+  );
   const [authView, setAuthView] = useState<'login' | 'register'>('login');
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [rooms, setRooms] = useState<any[]>([]);
@@ -268,8 +270,7 @@ function AppContent() {
     return <Login onLogin={login} onSwitchToRegister={() => setAuthView('register')} />;
   }
 
-  const localeMap: Record<string, string> = { en: 'en-US', fr: 'fr-FR', de: 'de-DE', es: 'es-ES', it: 'it-IT', nl: 'nl-NL' };
-  const today = new Date().toLocaleDateString(localeMap[user.language] || 'en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+  const today = new Date().toLocaleDateString(getLocale(user.language), { weekday: 'long', month: 'long', day: 'numeric' });
   const periods: Array<'all' | 'week' | 'month' | 'year'> = ['all', 'week', 'month', 'year'];
   const myPoints = pointsPeriod === 'all'
     ? (user.points ?? 0)

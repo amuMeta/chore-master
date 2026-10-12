@@ -8,6 +8,7 @@ import { CheckIcon, BackIcon, PlusIcon, CoinIcon } from '../icons/UIIcons';
 import { getRoomHealth } from '../../utils/health';
 import { api } from '../../hooks/useApi';
 import { useTranslation } from '../../hooks/useTranslation';
+import { getLocale } from '../../i18n/languages';
 import { AdminCompleteModal } from '../shared/AdminCompleteModal';
 
 const FREQ_UNITS = [
@@ -78,8 +79,7 @@ function formatNextDue(lastCompletedAt: string | null, frequencyDays: number, t:
   const dueStart = new Date(nextDue.getFullYear(), nextDue.getMonth(), nextDue.getDate());
   const diffDays = Math.round((dueStart.getTime() - todayStart.getTime()) / (24 * 60 * 60 * 1000));
   if (diffDays <= 1) return { text: t('roomDetail.tomorrow'), color: 'var(--health-yellow)' };
-  const localeMap: Record<string, string> = { en: 'en-US', fr: 'fr-FR', de: 'de-DE', es: 'es-ES', it: 'it-IT' };
-  const locale = localeMap[language || 'en'] || 'en-US';
+  const locale = getLocale(language);
   const text = nextDue.toLocaleDateString(locale, { day: 'numeric', month: 'short' });
   return { text, color: diffDays <= 7 ? 'var(--health-yellow)' : 'var(--health-green)' };
 }
@@ -608,7 +608,7 @@ export function RoomDetail({ room, language, isAdmin, currentUserId, currentUser
                                   border: `1.5px solid ${checked ? 'var(--warm-accent)' : 'var(--warm-border)'}`,
                                   backgroundColor: checked ? 'var(--warm-accent-light)' : 'var(--warm-bg-input)',
                                   fontSize: 12, fontWeight: 700, color: checked ? 'var(--warm-accent)' : 'var(--warm-text)',
-                                  fontFamily: 'Nunito', transition: 'all 0.15s ease',
+                                  fontFamily: 'var(--font-sans)', transition: 'all 0.15s ease',
                                 }}>
                                   <input
                                     type="checkbox"
@@ -648,7 +648,7 @@ export function RoomDetail({ room, language, isAdmin, currentUserId, currentUser
                                         border: `1.5px solid ${editForm.assignmentMode === mode ? 'var(--warm-accent)' : 'var(--warm-border)'}`,
                                         backgroundColor: editForm.assignmentMode === mode ? 'var(--warm-accent-light)' : 'transparent',
                                         color: editForm.assignmentMode === mode ? 'var(--warm-accent)' : 'var(--warm-text-light)',
-                                        cursor: 'pointer', fontFamily: 'Nunito',
+                                        cursor: 'pointer', fontFamily: 'var(--font-sans)',
                                       }}
                                     >
                                       {mode === 'first' ? t('rooms.modeFirst') : mode === 'shared' ? t('rooms.modeShared') : mode === 'custom' ? t('rooms.modeCustom') : t('roomDetail.rotating')}
@@ -704,7 +704,7 @@ export function RoomDetail({ room, language, isAdmin, currentUserId, currentUser
                           style={{
                             background: 'none', border: '1.5px solid var(--warm-danger-border)', borderRadius: 10,
                             fontWeight: 700, color: 'var(--warm-danger)',
-                            cursor: 'pointer', fontFamily: 'Nunito',
+                            cursor: 'pointer', fontFamily: 'var(--font-sans)',
                           }}>{t('roomDetail.deleteTask')}</button>
                         <div style={{ display: 'flex', gap: 8 }}>
                           <button onClick={() => setEditingTask(null)} className="tq-btn tq-btn-secondary tq-btn-sm">{t('common.cancel')}</button>
@@ -802,20 +802,20 @@ export function RoomDetail({ room, language, isAdmin, currentUserId, currentUser
                         style={{
                           background: 'none', border: '1.5px solid var(--warm-border)', borderRadius: 10,
                           fontWeight: 700, color: 'var(--warm-text-muted)',
-                          cursor: 'pointer', fontFamily: 'Nunito',
+                          cursor: 'pointer', fontFamily: 'var(--font-sans)',
                         }}>{t('common.edit')}</button>
                       <button onClick={() => deleteTask(task.id)}
                         className="tq-btn-sm"
                         style={{
                           background: 'none', border: '1.5px solid var(--warm-danger-border)', borderRadius: 10,
                           fontWeight: 700, color: 'var(--warm-danger)',
-                          cursor: 'pointer', fontFamily: 'Nunito',
+                          cursor: 'pointer', fontFamily: 'var(--font-sans)',
                         }}>&times;</button>
                       <div style={{ position: 'relative' }}>
                         <button
                           onClick={(e) => { e.stopPropagation(); if (taskMenuOpen === task.id) { setTaskMenuOpen(null); setMoveMenuTaskId(null); } else { handleTaskMenuOpen(task.id); setMoveMenuTaskId(null); } }}
                           className="tq-btn-sm"
-                          style={{ background: 'none', border: '1.5px solid var(--warm-border)', borderRadius: 10, fontWeight: 700, color: 'var(--warm-text-muted)', cursor: 'pointer', fontFamily: 'Nunito', padding: '2px 7px', fontSize: 16 }}
+                          style={{ background: 'none', border: '1.5px solid var(--warm-border)', borderRadius: 10, fontWeight: 700, color: 'var(--warm-text-muted)', cursor: 'pointer', fontFamily: 'var(--font-sans)', padding: '2px 7px', fontSize: 16 }}
                           title="More options"
                         >⋮</button>
                         {taskMenuOpen === task.id && (
@@ -824,11 +824,11 @@ export function RoomDetail({ room, language, isAdmin, currentUserId, currentUser
                           >
                             <button
                               onClick={() => handleDuplicateTask(task.id)}
-                              style={{ width: '100%', textAlign: 'left', padding: '10px 14px', fontSize: 12, fontWeight: 700, color: 'var(--warm-text)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'Nunito' }}
+                              style={{ width: '100%', textAlign: 'left', padding: '10px 14px', fontSize: 12, fontWeight: 700, color: 'var(--warm-text)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-sans)' }}
                             >{t('roomDetail.duplicateTask')}</button>
                             <button
                               onClick={() => setMoveMenuTaskId(moveMenuTaskId === task.id ? null : task.id)}
-                              style={{ width: '100%', textAlign: 'left', padding: '10px 14px', fontSize: 12, fontWeight: 700, color: 'var(--warm-text)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'Nunito', borderTop: '1px solid var(--warm-border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                              style={{ width: '100%', textAlign: 'left', padding: '10px 14px', fontSize: 12, fontWeight: 700, color: 'var(--warm-text)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-sans)', borderTop: '1px solid var(--warm-border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                             >
                               <span>{t('roomDetail.moveToRoom')}</span>
                               <span style={{ fontSize: 10, opacity: 0.6 }}>{moveMenuTaskId === task.id ? '▲' : '▼'}</span>
@@ -838,14 +838,14 @@ export function RoomDetail({ room, language, isAdmin, currentUserId, currentUser
                                 {allRooms.filter(r => r.id !== room.id).map(r => (
                                   <button key={r.id}
                                     onClick={() => handleMoveTask(task.id, r.id)}
-                                    style={{ width: '100%', textAlign: 'left', padding: '8px 18px', fontSize: 12, fontWeight: 600, color: 'var(--warm-text)', background: 'none', border: 'none', borderBottom: '1px solid var(--warm-border-subtle)', cursor: 'pointer', fontFamily: 'Nunito' }}
+                                    style={{ width: '100%', textAlign: 'left', padding: '8px 18px', fontSize: 12, fontWeight: 600, color: 'var(--warm-text)', background: 'none', border: 'none', borderBottom: '1px solid var(--warm-border-subtle)', cursor: 'pointer', fontFamily: 'var(--font-sans)' }}
                                   >{roomDisplayName(r.name, r.roomType)}</button>
                                 ))}
                               </div>
                             )}
                             <button
                               onClick={() => { setTaskMenuOpen(null); setMoveMenuTaskId(null); }}
-                              style={{ width: '100%', textAlign: 'center', padding: '8px 14px', fontSize: 11, fontWeight: 600, color: 'var(--warm-text-muted)', background: 'none', border: 'none', borderTop: '1px solid var(--warm-border-subtle)', cursor: 'pointer', fontFamily: 'Nunito' }}
+                              style={{ width: '100%', textAlign: 'center', padding: '8px 14px', fontSize: 11, fontWeight: 600, color: 'var(--warm-text-muted)', background: 'none', border: 'none', borderTop: '1px solid var(--warm-border-subtle)', cursor: 'pointer', fontFamily: 'var(--font-sans)' }}
                             >{t('common.cancel')}</button>
                           </div>
                         )}
@@ -862,7 +862,7 @@ export function RoomDetail({ room, language, isAdmin, currentUserId, currentUser
                       className="tq-btn-sm"
                       style={{
                         background: 'none', border: '1.5px solid var(--warm-border)', borderRadius: 10,
-                        cursor: 'pointer', fontFamily: 'Nunito',
+                        cursor: 'pointer', fontFamily: 'var(--font-sans)',
                       }}
                     >🔄</button>
                   )}
@@ -1006,7 +1006,7 @@ export function RoomDetail({ room, language, isAdmin, currentUserId, currentUser
                               border: `1.5px solid ${checked ? 'var(--warm-accent)' : 'var(--warm-border)'}`,
                               backgroundColor: checked ? 'var(--warm-accent-light)' : 'var(--warm-bg-input)',
                               fontSize: 12, fontWeight: 700, color: checked ? 'var(--warm-accent)' : 'var(--warm-text)',
-                              fontFamily: 'Nunito', transition: 'all 0.15s ease',
+                              fontFamily: 'var(--font-sans)', transition: 'all 0.15s ease',
                             }}>
                               <input
                                 type="checkbox"
@@ -1043,7 +1043,7 @@ export function RoomDetail({ room, language, isAdmin, currentUserId, currentUser
                                     border: `1.5px solid ${newAssignmentMode === mode ? 'var(--warm-accent)' : 'var(--warm-border)'}`,
                                     backgroundColor: newAssignmentMode === mode ? 'var(--warm-accent-light)' : 'transparent',
                                     color: newAssignmentMode === mode ? 'var(--warm-accent)' : 'var(--warm-text-light)',
-                                    cursor: 'pointer', fontFamily: 'Nunito',
+                                    cursor: 'pointer', fontFamily: 'var(--font-sans)',
                                   }}
                                 >
                                   {mode === 'first' ? t('rooms.modeFirst') : mode === 'shared' ? t('rooms.modeShared') : t('rooms.modeCustom')}
@@ -1110,7 +1110,7 @@ export function RoomDetail({ room, language, isAdmin, currentUserId, currentUser
               style={{
                 background: 'none', border: '1.5px dashed var(--warm-border)', borderRadius: 12,
                 cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8,
-                fontWeight: 700, color: 'var(--warm-text-light)', fontFamily: 'Nunito', flex: 1,
+                fontWeight: 700, color: 'var(--warm-text-light)', fontFamily: 'var(--font-sans)', flex: 1,
                 justifyContent: 'center',
               }}>
               <PlusIcon /> {t('roomDetail.addTask')}
@@ -1131,7 +1131,7 @@ export function RoomDetail({ room, language, isAdmin, currentUserId, currentUser
               style={{
                 background: 'none', border: '1.5px dashed var(--warm-border)', borderRadius: 12,
                 cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8,
-                fontWeight: 700, color: 'var(--warm-text-light)', fontFamily: 'Nunito',
+                fontWeight: 700, color: 'var(--warm-text-light)', fontFamily: 'var(--font-sans)',
                 justifyContent: 'center', padding: '0 16px',
               }}>
               {t('roomDetail.addFromTemplates')}

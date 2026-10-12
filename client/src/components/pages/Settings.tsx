@@ -5,6 +5,7 @@ import { Toggle } from '../shared/Toggle';
 import { BellIcon, DownloadIcon, UploadIcon, LockIcon, CoinIcon } from '../icons/UIIcons';
 import { AVATAR_PRESETS } from '../icons/AvatarPresets';
 import { useTranslation } from '../../hooks/useTranslation';
+import { LANGUAGES, getLocale } from '../../i18n/languages';
 import type { User } from '../../hooks/useAuth';
 import { api } from '../../hooks/useApi';
 
@@ -142,8 +143,7 @@ export function Settings({
   const [ntfyToken, setNtfyToken] = useState('');
   const [ntfyHasToken, setNtfyHasToken] = useState(false);
 
-  const localeMap: Record<string, string> = { en: 'en-US', fr: 'fr-FR', de: 'de-DE', es: 'es-ES', it: 'it-IT', nl: 'nl-NL' };
-  const locale = localeMap[user.language || 'en'] || 'en-US';
+  const locale = getLocale(user.language);
 
   const formatDate = (isoDate?: string | null): string => {
     if (!isoDate) return '-';
@@ -966,7 +966,7 @@ export function Settings({
                       if (e.key === 'Enter') await saveRewardEdit(r);
                       if (e.key === 'Escape') cancelRewardEdit();
                     }}
-                    style={{ padding: '6px 8px', borderRadius: 8, border: '1.5px solid var(--warm-border)', fontFamily: 'Nunito', fontSize: 12 }}
+                    style={{ padding: '6px 8px', borderRadius: 8, border: '1.5px solid var(--warm-border)', fontFamily: 'var(--font-sans)', fontSize: 12 }}
                   />
                 ) : (
                   <div style={{ fontSize: 12, fontWeight: 800, color: 'var(--warm-accent)', display: 'flex', alignItems: 'center', gap: 4 }}><CoinIcon /> {r.costCoins}</div>
@@ -1125,12 +1125,9 @@ export function Settings({
               {isAdmin && u.role !== 'admin' && memberEditOpen[u.id] && (
                 <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid var(--warm-border)', display: 'grid', gap: 8 }}>
                   <select className="tq-input" value={memberProfile[u.id]?.language || 'en'} onChange={(e) => setMemberProfile((prev) => ({ ...prev, [u.id]: { ...prev[u.id], language: e.target.value } }))} style={{ cursor: 'pointer' }}>
-                    <option value="en">English</option>
-                    <option value="fr">Français</option>
-                    <option value="de">Deutsch</option>
-                    <option value="es">Español</option>
-                    <option value="it">Italiano</option>
-                    <option value="nl">Nederlands</option>
+                    {LANGUAGES.map((l) => (
+                      <option key={l.code} value={l.code}>{l.label}</option>
+                    ))}
                   </select>
                   <select className="tq-input" value={memberProfile[u.id]?.avatarType || 'letter'} onChange={(e) => setMemberProfile((prev) => ({ ...prev, [u.id]: { ...prev[u.id], avatarType: e.target.value as 'letter' | 'preset' } }))} style={{ cursor: 'pointer' }}>
                     <option value="letter">{t('profile.letterMode')}</option>

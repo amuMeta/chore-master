@@ -404,10 +404,10 @@ export function RoomsList({ rooms, language, isAdmin, users, onSelectRoom, onCre
                             {zoneMenuRoomId === room.id && (
                               <div style={{ position: 'absolute', right: 0, top: '100%', zIndex: 100, background: 'var(--warm-card)', border: '1.5px solid var(--warm-border)', borderRadius: 12, boxShadow: '0 4px 16px rgba(0,0,0,0.14)', minWidth: 150, overflow: 'hidden' }}>
                                 {room.zoneId && (
-                                  <button onClick={async () => { await api.updateRoom(room.id, { zoneId: null }); setZoneMenuRoomId(null); window.location.reload(); }} style={{ width: '100%', textAlign: 'left', padding: '9px 14px', fontSize: 12, fontWeight: 600, color: 'var(--warm-text-muted)', background: 'none', border: 'none', borderBottom: '1px solid var(--warm-border-subtle)', cursor: 'pointer', fontFamily: 'Nunito' }}>{t('rooms.removeFromZone')}</button>
+                                  <button onClick={async () => { await api.updateRoom(room.id, { zoneId: null }); setZoneMenuRoomId(null); window.location.reload(); }} style={{ width: '100%', textAlign: 'left', padding: '9px 14px', fontSize: 12, fontWeight: 600, color: 'var(--warm-text-muted)', background: 'none', border: 'none', borderBottom: '1px solid var(--warm-border-subtle)', cursor: 'pointer', fontFamily: 'var(--font-sans)' }}>{t('rooms.removeFromZone')}</button>
                                 )}
                                 {zones.map(z => (
-                                  <button key={z.id} onClick={async () => { await api.updateRoom(room.id, { zoneId: z.id }); setZoneMenuRoomId(null); window.location.reload(); }} style={{ width: '100%', textAlign: 'left', padding: '9px 14px', fontSize: 12, fontWeight: room.zoneId === z.id ? 800 : 600, color: room.zoneId === z.id ? 'var(--warm-accent)' : 'var(--warm-text)', background: 'none', border: 'none', borderBottom: '1px solid var(--warm-border-subtle)', cursor: 'pointer', fontFamily: 'Nunito' }}>🏷️ {z.name}</button>
+                                  <button key={z.id} onClick={async () => { await api.updateRoom(room.id, { zoneId: z.id }); setZoneMenuRoomId(null); window.location.reload(); }} style={{ width: '100%', textAlign: 'left', padding: '9px 14px', fontSize: 12, fontWeight: room.zoneId === z.id ? 800 : 600, color: room.zoneId === z.id ? 'var(--warm-accent)' : 'var(--warm-text)', background: 'none', border: 'none', borderBottom: '1px solid var(--warm-border-subtle)', cursor: 'pointer', fontFamily: 'var(--font-sans)' }}>🏷️ {z.name}</button>
                                 ))}
                               </div>
                             )}
@@ -783,7 +783,7 @@ export function RoomsList({ rooms, language, isAdmin, users, onSelectRoom, onCre
                         placeholder={t('rooms.addCustomTask')}
                         style={{
                           flex: 1, padding: '6px 0', border: 'none', outline: 'none',
-                          fontSize: 13, fontFamily: 'Nunito', fontWeight: 600, color: 'var(--warm-text)',
+                          fontSize: 13, fontFamily: 'var(--font-sans)', fontWeight: 600, color: 'var(--warm-text)',
                           backgroundColor: 'transparent',
                         }} />
                       <button onClick={addCustomTask} className="tq-btn tq-btn-secondary"

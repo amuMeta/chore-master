@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { SparkleIcon } from '../icons/UIIcons';
 import { useTranslation } from '../../hooks/useTranslation';
+import { LANGUAGES, resolveLanguage } from '../../i18n/languages';
 import { api } from '../../hooks/useApi';
 import UserAvatar from '../shared/UserAvatar';
 
@@ -21,9 +22,8 @@ interface LoginProps {
 export function Login({ onLogin, onSwitchToRegister }: LoginProps) {
   const initialLang = (() => {
     const saved = typeof localStorage !== 'undefined' ? localStorage.getItem('tidyquest_auth_lang') : null;
-    if (saved && ['en', 'fr', 'de', 'es', 'it', 'nl'].includes(saved)) return saved;
-    const browser = typeof navigator !== 'undefined' ? navigator.language.slice(0, 2) : 'en';
-    return ['en', 'fr', 'de', 'es', 'it', 'nl'].includes(browser) ? browser : 'en';
+    const browser = typeof navigator !== 'undefined' ? navigator.language : null;
+    return resolveLanguage(saved, browser);
   })();
   const [authLanguage, setAuthLanguage] = useState(initialLang);
   const { t } = useTranslation(authLanguage);
@@ -93,15 +93,12 @@ export function Login({ onLogin, onSwitchToRegister }: LoginProps) {
             }}
             style={{
               marginTop: 10, padding: '6px 10px', borderRadius: 10, border: '1.5px solid var(--warm-border)',
-              fontSize: 12, fontFamily: 'Nunito', fontWeight: 700, color: 'var(--warm-text-secondary)', backgroundColor: 'var(--warm-bg-subtle)',
+              fontSize: 12, fontFamily: 'var(--font-sans)', fontWeight: 700, color: 'var(--warm-text-secondary)', backgroundColor: 'var(--warm-bg-subtle)',
             }}
           >
-            <option value="en">English</option>
-            <option value="fr">Français</option>
-            <option value="de">Deutsch</option>
-            <option value="es">Español</option>
-            <option value="it">Italiano</option>
-            <option value="nl">Nederlands</option>
+            {LANGUAGES.map((l) => (
+              <option key={l.code} value={l.code}>{l.label}</option>
+            ))}
           </select>
         </div>
 
@@ -122,7 +119,7 @@ export function Login({ onLogin, onSwitchToRegister }: LoginProps) {
                     display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
                     padding: '10px 8px', borderRadius: 14, border: '1.5px solid var(--warm-border)',
                     backgroundColor: 'var(--warm-bg-subtle)', cursor: 'pointer',
-                    minWidth: 72, transition: 'all 0.15s ease', fontFamily: 'Nunito',
+                    minWidth: 72, transition: 'all 0.15s ease', fontFamily: 'var(--font-sans)',
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderColor = 'var(--warm-accent)';
@@ -153,7 +150,7 @@ export function Login({ onLogin, onSwitchToRegister }: LoginProps) {
                 onClick={() => setSelectedUser('')}
                 style={{
                   background: 'none', border: 'none', color: 'var(--warm-text-light)',
-                  fontSize: 11, fontWeight: 600, cursor: 'pointer', fontFamily: 'Nunito',
+                  fontSize: 11, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-sans)',
                   textDecoration: 'underline',
                 }}
               >
@@ -186,7 +183,7 @@ export function Login({ onLogin, onSwitchToRegister }: LoginProps) {
                         onClick={() => { setSelectedUser(null); setUsername(''); setPassword(''); setError(''); }}
                         style={{
                           background: 'none', border: 'none', color: 'var(--warm-text-light)',
-                          fontSize: 11, fontWeight: 600, cursor: 'pointer', fontFamily: 'Nunito',
+                          fontSize: 11, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-sans)',
                           textDecoration: 'underline',
                         }}
                       >
@@ -231,7 +228,7 @@ export function Login({ onLogin, onSwitchToRegister }: LoginProps) {
             <button onClick={onSwitchToRegister}
               style={{
                 background: 'none', border: 'none', color: 'var(--warm-accent)', fontSize: 13,
-                fontWeight: 700, cursor: 'pointer', fontFamily: 'Nunito',
+                fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font-sans)',
               }}>
               {t('auth.createAccount')}
             </button>

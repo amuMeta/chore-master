@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { SparkleIcon } from '../icons/UIIcons';
 import { useTranslation } from '../../hooks/useTranslation';
+import { LANGUAGES, resolveLanguage } from '../../i18n/languages';
 
 interface RegisterProps {
   onRegister: (data: { username: string; password: string; displayName: string; language: string }) => Promise<void>;
@@ -10,9 +11,8 @@ interface RegisterProps {
 export function Register({ onRegister, onSwitchToLogin }: RegisterProps) {
   const initialLang = (() => {
     const saved = typeof localStorage !== 'undefined' ? localStorage.getItem('tidyquest_auth_lang') : null;
-    if (saved && ['en', 'fr', 'de', 'es', 'it', 'nl'].includes(saved)) return saved;
-    const browser = typeof navigator !== 'undefined' ? navigator.language.slice(0, 2) : 'en';
-    return ['en', 'fr', 'de', 'es', 'it', 'nl'].includes(browser) ? browser : 'en';
+    const browser = typeof navigator !== 'undefined' ? navigator.language : null;
+    return resolveLanguage(saved, browser);
   })();
   const [authLanguage, setAuthLanguage] = useState(initialLang);
   const { t } = useTranslation(authLanguage);
@@ -66,15 +66,12 @@ export function Register({ onRegister, onSwitchToLogin }: RegisterProps) {
             }}
             style={{
               marginTop: 10, padding: '6px 10px', borderRadius: 10, border: '1.5px solid var(--warm-border)',
-              fontSize: 12, fontFamily: 'Nunito', fontWeight: 700, color: 'var(--warm-text-secondary)', backgroundColor: 'var(--warm-bg-subtle)',
+              fontSize: 12, fontFamily: 'var(--font-sans)', fontWeight: 700, color: 'var(--warm-text-secondary)', backgroundColor: 'var(--warm-bg-subtle)',
             }}
           >
-            <option value="en">English</option>
-            <option value="fr">Français</option>
-            <option value="de">Deutsch</option>
-            <option value="es">Español</option>
-            <option value="it">Italiano</option>
-            <option value="nl">Nederlands</option>
+            {LANGUAGES.map((l) => (
+              <option key={l.code} value={l.code}>{l.label}</option>
+            ))}
           </select>
         </div>
 
@@ -105,7 +102,7 @@ export function Register({ onRegister, onSwitchToLogin }: RegisterProps) {
           <button onClick={onSwitchToLogin}
             style={{
               background: 'none', border: 'none', color: 'var(--warm-accent)', fontSize: 13,
-              fontWeight: 700, cursor: 'pointer', fontFamily: 'Nunito',
+              fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font-sans)',
             }}>
             {t('auth.alreadyHaveAccount')}
           </button>

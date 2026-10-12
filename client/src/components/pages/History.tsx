@@ -82,8 +82,8 @@ export function History({ language, isAdmin }: { language?: string; isAdmin?: bo
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                   {confirmCancel === h.id ? (
                     <div style={{ display: 'flex', gap: 4 }}>
-                      <button onClick={() => handleCancel(h.id)} style={{ background: 'none', border: '1px solid var(--warm-danger)', borderRadius: 8, padding: '3px 7px', fontSize: 10, fontWeight: 700, color: 'var(--warm-danger)', cursor: 'pointer', fontFamily: 'Nunito' }}>✓</button>
-                      <button onClick={() => setConfirmCancel(null)} style={{ background: 'none', border: '1px solid var(--warm-text-light)', borderRadius: 8, padding: '3px 7px', fontSize: 10, fontWeight: 700, color: 'var(--warm-text-light)', cursor: 'pointer', fontFamily: 'Nunito' }}>✗</button>
+                      <button onClick={() => handleCancel(h.id)} style={{ background: 'none', border: '1px solid var(--warm-danger)', borderRadius: 8, padding: '3px 7px', fontSize: 10, fontWeight: 700, color: 'var(--warm-danger)', cursor: 'pointer', fontFamily: 'var(--font-sans)' }}>✓</button>
+                      <button onClick={() => setConfirmCancel(null)} style={{ background: 'none', border: '1px solid var(--warm-text-light)', borderRadius: 8, padding: '3px 7px', fontSize: 10, fontWeight: 700, color: 'var(--warm-text-light)', cursor: 'pointer', fontFamily: 'var(--font-sans)' }}>✗</button>
                     </div>
                   ) : (
                     <button onClick={() => setConfirmCancel(h.id)} title={t('history.cancel')} style={{ background: 'none', border: '1px solid var(--warm-border)', borderRadius: 8, padding: '3px 8px', fontSize: 13, cursor: 'pointer', color: 'var(--warm-text-muted)' }}>🗑</button>
