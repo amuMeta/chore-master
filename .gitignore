@@ -8,3 +8,6 @@ projet/
 PROGRESS.md
 .claude/skills/test-beta/.env
 __pycache__
+
+# HTML artifacts the local preview tool drops into the repo root
+/*.html
