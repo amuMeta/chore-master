@@ -1,5 +1,7 @@
 # 🏠 家务小当家
 
+「家务小当家」是个把家务变成冒险的家庭小游戏。每件家务都有「血量」，拖久了会掉血，及时完成就能赚金币、攒连击、解锁成就。家里人各有账号，排行榜上一比高低，孩子抢着干活，大人省心。七日任务、周榜月榜、徽章墙一应俱全，还能用积分兑换奖励。中文界面，自托管部署，数据全在自己手里。
+
 > Transform household chores into an epic family adventure
 
 **家务小当家** is a self-hosted web application that gamifies housework using RPG mechanics. Complete tasks, earn coins, unlock achievements, and compete with your family on the leaderboard.
