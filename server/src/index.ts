@@ -1,3 +1,5 @@
+// MUST stay first: populate process.env before any module reads it at import time
+import './loadEnv';
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
