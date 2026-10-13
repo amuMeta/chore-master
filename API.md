@@ -1088,4 +1088,4 @@ Currently **no rate limiting** is implemented. For production deployments, consi
 
 ---
 
-**Need help?** Open an issue on [GitHub Issues](https://github.com/mellow-fox/TidyQuest/issues)
+**Need help?** Open an issue on [GitHub Issues](https://github.com/amuMeta/chore-master/issues)

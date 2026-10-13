@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Maintainer>
-  <WebPage>https://github.com/mellow-fox/TidyQuest</WebPage>
+  <WebPage>https://github.com/amuMeta/chore-master</WebPage>
   <Profile>
 ## 家务小当家
 
@@ -11,8 +11,8 @@ Assign tasks to rooms, earn coins, unlock achievements, track goals, and compete
 **Apps maintained:**
 - **家务小当家** — Household chore gamification (tasks, coins, achievements, leaderboard, goals)
 
-**Support:** https://github.com/mellow-fox/TidyQuest/issues
+**Support:** https://github.com/amuMeta/chore-master/issues
   </Profile>
-  <Photo>https://raw.githubusercontent.com/mellow-fox/家务小当家/main/screenshots/dashboard.jpg</Photo>
-  <Photo>https://raw.githubusercontent.com/mellow-fox/家务小当家/main/screenshots/rooms.jpg</Photo>
+  <Photo>https://raw.githubusercontent.com/amuMeta/chore-master/main/screenshots/dashboard.png</Photo>
+  <Photo>https://raw.githubusercontent.com/amuMeta/chore-master/main/screenshots/rooms.png</Photo>
 </Maintainer>

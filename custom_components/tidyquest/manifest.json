@@ -4,9 +4,9 @@
   "codeowners": [],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/mellow-fox/TidyQuest",
+  "documentation": "https://github.com/amuMeta/chore-master",
   "iot_class": "local_polling",
-  "issue_tracker": "https://github.com/mellow-fox/TidyQuest/issues",
+  "issue_tracker": "https://github.com/amuMeta/chore-master/issues",
   "requirements": [],
   "version": "0.1.0"
 }
