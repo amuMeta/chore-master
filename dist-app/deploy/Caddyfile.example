@@ -1,0 +1,12 @@
+# 域名备案通过后使用：把 docker-compose.prod.yml 的端口改成
+#   - "127.0.0.1:3000:3000"
+# 然后放置为 /srv/tidyquest/Caddyfile 并启动：
+#   docker run -d --name caddy --restart unless-stopped \
+#     -p 80:80 -p 443:443 \
+#     -v /srv/tidyquest/Caddyfile:/etc/caddy/Caddyfile \
+#     -v caddy_data:/data caddy:2
+
+tq.example.com {
+    reverse_proxy 127.0.0.1:3000
+    encode gzip
+}

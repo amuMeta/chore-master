@@ -12,7 +12,12 @@ __pycache__
 # HTML artifacts the local preview tool drops into the repo root
 /*.html
 
-# Packaged app docs + installers (dist-app/), and the Tauri build cache
-dist-app/
+# 打包产物：安装包和文档不进仓库，但部署脚本要随仓库走（服务器靠 git clone 拉取）
+# 注意：目录被忽略后子目录的 ! 规则不生效，所以这里必须用 dist-app/* 而不是 dist-app/
+dist-app/*
+!dist-app/deploy/
+!dist-app/README.md
+
+# Tauri build cache
 client/src-tauri/target/
 client/src-tauri/gen/

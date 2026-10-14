@@ -1,0 +1,15 @@
+services:
+  jiawu:
+    build: .
+    # 未备案机器用 8080（80/443 会被封）；备案后改成 "127.0.0.1:3000:3000" 交给 Caddy 反代
+    ports:
+      - "8080:3000"
+    volumes:
+      - ./data:/app/data
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - TZ=Asia/Shanghai
+    restart: unless-stopped
