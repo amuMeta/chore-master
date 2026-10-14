@@ -32,8 +32,24 @@ export function setServerUrl(url: string): void {
   }
 }
 
-/** Base for API calls: configured server, or '' (same-origin) for the web build. */
+/**
+ * Base for API calls.
+ *
+ * The web build is always same-origin: in dev the Vite server proxies `/api` to
+ * the backend, and in production the very same Express app serves the built
+ * client — so a relative `/api` is always the right target and there is nothing
+ * to configure.
+ *
+ * Honouring a stored URL in a browser would be actively harmful: it sends every
+ * request somewhere else, and an HTTPS page silently blocks a plain-HTTP
+ * backend (mixed content), which surfaces as 401s and bounces the user straight
+ * back to the login page. So the web build ignores — and clears — that value.
+ */
 export function getApiBase(): string {
+  if (!isTauri()) {
+    if (getServerUrl()) setServerUrl('');
+    return '';
+  }
   return getServerUrl();
 }
 
@@ -45,7 +61,7 @@ export function apiUrl(path: string): string {
 export function assetUrl(url: string): string {
   if (!url) return url;
   if (/^https?:\/\//i.test(url) || url.startsWith('data:')) return url;
-  const base = getServerUrl();
+  const base = getApiBase();
   if (!base) return url;
   return `${base}${url.startsWith('/') ? url : `/${url}`}`;
 }

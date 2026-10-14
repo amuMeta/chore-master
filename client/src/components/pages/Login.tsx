@@ -102,17 +102,21 @@ export function Login({ onLogin, onSwitchToRegister }: LoginProps) {
               <option key={l.code} value={l.code}>{l.label}</option>
             ))}
           </select>
-          <button
-            type="button"
-            onClick={() => setServerOpen(true)}
-            style={{
-              marginTop: 10, background: 'none', border: 'none', color: 'var(--warm-text-light)',
-              fontSize: 11, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-sans)',
-              textDecoration: 'underline',
-            }}
-          >
-            服务器地址{getServerUrl() ? `：${getServerUrl()}` : ''}
-          </button>
+          {/* Packaged apps only: the web build is same-origin, so there is no
+              server to point at — offering this would break every API call. */}
+          {isTauri() && (
+            <button
+              type="button"
+              onClick={() => setServerOpen(true)}
+              style={{
+                marginTop: 10, background: 'none', border: 'none', color: 'var(--warm-text-light)',
+                fontSize: 11, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-sans)',
+                textDecoration: 'underline',
+              }}
+            >
+              服务器地址{getServerUrl() ? `：${getServerUrl()}` : ''}
+            </button>
+          )}
         </div>
 
         {avatarUsers.length > 0 && !selectedUser && (
