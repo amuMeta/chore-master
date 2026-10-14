@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AvatarPresetIcon } from '../icons/AvatarPresets';
+import { assetUrl } from '../../utils/serverConfig';
 
 interface UserAvatarProps {
   name: string;
@@ -34,7 +35,7 @@ const UserAvatar: React.FC<UserAvatarProps> = ({
         }}
       >
         <img
-          src={avatarPhotoUrl}
+          src={assetUrl(avatarPhotoUrl ?? '')}
           alt={name}
           onError={() => setPhotoError(true)}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}

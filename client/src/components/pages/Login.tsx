@@ -4,7 +4,9 @@ import { LANGUAGES, resolveLanguage } from '../../i18n/languages';
 import { BRAND, BRAND_LOGO } from '../../brand';
 import { readLS, writeLS } from '../../constants/storageKeys';
 import { api } from '../../hooks/useApi';
+import { isTauri, getServerUrl } from '../../utils/serverConfig';
 import UserAvatar from '../shared/UserAvatar';
+import ServerConfigModal from '../shared/ServerConfigModal';
 
 interface LoginUser {
   username: string;
@@ -35,6 +37,7 @@ export function Login({ onLogin, onSwitchToRegister }: LoginProps) {
   const [registrationEnabled, setRegistrationEnabled] = useState(true);
   const [avatarUsers, setAvatarUsers] = useState<LoginUser[]>([]);
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const [serverOpen, setServerOpen] = useState(isTauri() && !getServerUrl());
   const passwordRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -99,6 +102,17 @@ export function Login({ onLogin, onSwitchToRegister }: LoginProps) {
               <option key={l.code} value={l.code}>{l.label}</option>
             ))}
           </select>
+          <button
+            type="button"
+            onClick={() => setServerOpen(true)}
+            style={{
+              marginTop: 10, background: 'none', border: 'none', color: 'var(--warm-text-light)',
+              fontSize: 11, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-sans)',
+              textDecoration: 'underline',
+            }}
+          >
+            服务器地址{getServerUrl() ? `：${getServerUrl()}` : ''}
+          </button>
         </div>
 
         {avatarUsers.length > 0 && !selectedUser && (
@@ -234,6 +248,7 @@ export function Login({ onLogin, onSwitchToRegister }: LoginProps) {
           </div>
         )}
       </div>
+      <ServerConfigModal open={serverOpen} onClose={() => setServerOpen(false)} />
     </div>
   );
 }

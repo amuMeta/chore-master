@@ -1,6 +1,8 @@
-const API_BASE = '/api';
-
 import { readLS, removeLS } from '../constants/storageKeys';
+import { getApiBase } from '../utils/serverConfig';
+
+/** '/api' on the web (Vite proxy); '<serverUrl>/api' inside a packaged Tauri app. */
+const API_BASE = () => `${getApiBase()}/api`;
 
 function getToken(): string | null {
   return readLS('token');
@@ -16,7 +18,7 @@ async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> 
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const res = await fetch(`${API_BASE}${path}`, {
+  const res = await fetch(`${API_BASE()}${path}`, {
     ...options,
     headers,
   });
@@ -120,7 +122,7 @@ export const api = {
     const token = getToken();
     const formData = new FormData();
     formData.append('avatar', file);
-    const res = await fetch(`${API_BASE}/users/${userId}/avatar-upload`, {
+    const res = await fetch(`${API_BASE()}/users/${userId}/avatar-upload`, {
       method: 'POST',
       headers: token ? { 'Authorization': `Bearer ${token}` } : {},
       body: formData,
@@ -138,9 +140,9 @@ export const api = {
     apiFetch<any>('/import', { method: 'POST', body: JSON.stringify(data) }),
   achievements: () => apiFetch<any>('/achievements'),
   getRegistrationStatus: () =>
-    fetch('/api/auth/registration-status').then((r) => r.json()) as Promise<{ registrationEnabled: boolean }>,
+    fetch(`${API_BASE()}/auth/registration-status`).then((r) => r.json()) as Promise<{ registrationEnabled: boolean }>,
   getLoginAvatars: () =>
-    fetch('/api/auth/avatars').then((r) => r.json()) as Promise<Array<{ username: string; displayName: string; avatarColor: string; avatarType: string; avatarPreset?: string; avatarPhotoUrl?: string }>>,
+    fetch(`${API_BASE()}/auth/avatars`).then((r) => r.json()) as Promise<Array<{ username: string; displayName: string; avatarColor: string; avatarType: string; avatarPreset?: string; avatarPhotoUrl?: string }>>,
   getGamificationConfig: () =>
     apiFetch<{ gamificationEnabled: boolean }>('/users/gamification-config'),
   updateGamificationConfig: (data: { gamificationEnabled: boolean }) =>

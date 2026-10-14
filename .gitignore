@@ -11,3 +11,8 @@ __pycache__
 
 # HTML artifacts the local preview tool drops into the repo root
 /*.html
+
+# Packaged app docs + installers (dist-app/), and the Tauri build cache
+dist-app/
+client/src-tauri/target/
+client/src-tauri/gen/

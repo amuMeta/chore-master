@@ -1,0 +1,32 @@
+[package]
+name = "tidyquest"
+version = "0.6.3"
+description = "家务小当家 — self-hosted chore gamification app"
+authors = ["TidyQuest"]
+edition = "2021"
+rust-version = "1.77.2"
+
+[lib]
+name = "tidyquest_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[features]
+# Tauri enables this automatically for iOS/Android builds.
+custom-protocol = ["tauri/custom-protocol"]
+
+[profile.release]
+# codegen-units = 1 + lto = true makes the huge webview2-com crate take hours;
+# keep the build practical: thin LTO, parallel codegen, small binary.
+codegen-units = 16
+lto = "thin"
+opt-level = "s"
+panic = "abort"
+strip = true
